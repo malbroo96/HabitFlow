@@ -1,6 +1,7 @@
 // src/pages/TrackProgress.jsx
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useHabits } from '../hooks/useHabits';
 import Navbar from '../components/Navbar';
 import WeeklyBarChart from '../components/charts/WeeklyBarChart';
 import MonthlyLineChart from '../components/charts/MonthlyLineChart';
@@ -13,6 +14,7 @@ import {
 } from '../utils/helpers';
 
 const TrackProgress = () => {
+  useHabits(); // Load habits on mount
   const habits = useSelector(state => state.habits.habits);
   const completions = useSelector(state => state.habits.completions);
 
@@ -21,7 +23,7 @@ const TrackProgress = () => {
   const [overallCompletion, setOverallCompletion] = useState(0);
 
   useEffect(() => {
-    // Calculate progress data
+    // Calculate progress data whenever habits or completions change
     const weekly = calculateWeeklyProgress(habits, completions);
     const monthly = calculateMonthlyProgress(habits, completions);
     const overall = calculateOverallCompletion(habits, completions);
@@ -31,7 +33,7 @@ const TrackProgress = () => {
     setOverallCompletion(overall);
   }, [habits, completions]);
 
-  // Calculate some statistics
+  // Calculate statistics
   const totalHabits = habits.length;
   const activeStreaks = habits.filter(h => h.streak > 0).length;
   const avgCompletion = weeklyData.length > 0
@@ -104,7 +106,7 @@ const TrackProgress = () => {
                 {avgCompletion >= 50 && avgCompletion < 80 && (
                   <p>👍 Good progress! Keep pushing to reach 80% completion.</p>
                 )}
-                {avgCompletion < 50 && (
+                {avgCompletion < 50 && avgCompletion > 0 && (
                   <p>💪 Don't give up! Small steps lead to big changes. Keep going!</p>
                 )}
                 {activeStreaks === totalHabits && totalHabits > 0 && (
