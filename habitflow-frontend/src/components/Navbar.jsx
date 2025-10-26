@@ -1,20 +1,21 @@
 // src/components/Navbar.jsx
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { HomeIcon, ChartBarIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, ChartBarIcon, ArrowRightOnRectangleIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 
 const Navbar = () => {
   const location = useLocation();
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   const isActive = (path) => location.pathname === path;
 
   const handleSignOut = () => {
     if (window.confirm('Are you sure you want to sign out?')) {
-      // Clear localStorage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
       localStorage.removeItem('habitflow_habits');
       localStorage.removeItem('habitflow_completions');
-      // Redirect to home
-      window.location.href = '/';
+      window.location.href = '/login';
     }
   };
 
@@ -34,6 +35,14 @@ const Navbar = () => {
 
           {/* Navigation Links */}
           <div className="flex items-center space-x-4">
+            {/* Welcome Message */}
+            {user.name && (
+              <div className="hidden md:flex items-center space-x-2 text-gray-700 mr-4">
+                <UserCircleIcon className="w-5 h-5 text-emerald-500" />
+                <span className="text-sm">Welcome, <span className="font-semibold">{user.name}</span>!</span>
+              </div>
+            )}
+
             <Link
               to="/"
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 ${

@@ -1,34 +1,22 @@
 // src/pages/Home.jsx
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useHabits } from '../hooks/useHabits';
 import Navbar from '../components/Navbar';
 import QuoteCard from '../components/QuoteCard';
 import AddHabitForm from '../components/AddHabitForm';
 import HabitCard from '../components/HabitCard';
 import StreakCounter from '../components/StreakCounter';
+import AISuggestions from '../components/AISuggestions';
+import HabitCalendar from '../components/HabitCalendar';
 import { getTodayString, getDailyQuote } from '../utils/helpers';
 
 const Home = () => {
+  const { fetchHabits } = useHabits();
   const habits = useSelector(state => state.habits.habits);
   const completions = useSelector(state => state.habits.completions);
   const today = getTodayString();
   const dailyQuote = getDailyQuote();
-
-  // Load data from localStorage on mount
-  useEffect(() => {
-    const savedHabits = localStorage.getItem('habitflow_habits');
-    const savedCompletions = localStorage.getItem('habitflow_completions');
-    
-    if (savedHabits) {
-      // Dispatch loadHabits action if needed
-    }
-  }, []);
-
-  // Save data to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('habitflow_habits', JSON.stringify(habits));
-    localStorage.setItem('habitflow_completions', JSON.stringify(completions));
-  }, [habits, completions]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -47,7 +35,12 @@ const Home = () => {
 
         {/* Add Habit Form */}
         <div className="mb-8">
-          <AddHabitForm />
+          <AddHabitForm onHabitAdded={fetchHabits} />
+        </div>
+
+        {/* AI Suggestions */}
+        <div className="mb-8">
+          <AISuggestions />
         </div>
 
         {/* Habits List */}
@@ -84,6 +77,7 @@ const Home = () => {
                   isCompleted={
                     completions[habit.id] && completions[habit.id][today]
                   }
+                  onUpdate={fetchHabits}
                 />
               ))}
             </div>

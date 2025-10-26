@@ -5,7 +5,7 @@ import { addHabit } from '../store/slices/habitsSlice';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { habitIcons, habitCategories } from '../utils/helpers';
 
-const AddHabitForm = () => {
+const AddHabitForm = ({ onHabitAdded }) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -18,11 +18,27 @@ const AddHabitForm = () => {
 
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!formData.name.trim()) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!formData.name.trim()) return;
 
-    dispatch(addHabit(formData));
+  try {
+    const token = localStorage.getItem('token');
+    
+    const response = await fetch('http://localhost:5000/api/habits', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) throw new Error('Failed to create habit');
+    
+    const habit = await response.json();
+    
+    dispatch(addHabit(habit));
     
     setFormData({
       name: '',
@@ -32,7 +48,16 @@ const AddHabitForm = () => {
       scheduledTime: '',
     });
     setIsOpen(false);
-  };
+    
+    // Call callback to refresh habits list
+    if (props.onHabitAdded) {
+      props.onHabitAdded();
+    }
+  } catch (error) {
+    console.error('Error creating habit:', error);
+    alert('Failed to create habit. Please try again.');
+  }
+};
 
   const toggleDay = (day) => {
     setFormData(prev => ({
