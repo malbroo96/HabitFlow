@@ -7,6 +7,7 @@ import AddHabitForm from '../components/AddHabitForm';
 import HabitCard from '../components/HabitCard';
 import StreakCounter from '../components/StreakCounter';
 import { getTodayString, getDailyQuote } from '../utils/helpers';
+import GeminiChat from '../components/GeminiChat';
 
 const Home = () => {
   const habits = useSelector(state => state.habits.habits);
@@ -102,6 +103,10 @@ const Home = () => {
           </div>
         )}
       </main>
+      <aside className='hover:border-emerald-600 hover:border-[5px] transition-colors duration-200 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-[2px] border-emerald-500 rounded-lg'>
+        <h2 className="text-2xl font-bold text-gray-900 mb-4 px-4 text-center">AI Habit Assistant</h2>
+        <GeminiChat />
+      </aside>
     </div>
   );
 };
