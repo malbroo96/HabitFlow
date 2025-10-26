@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { askGemini } = require("../controllers/geminiController");
+const { askGemini, analyzeFood } = require("../controllers/geminiController");
 
 // Simple test to check if router is loaded
 router.get("/", (req, res) => {
@@ -10,10 +10,21 @@ router.get("/", (req, res) => {
 // POST route to send prompt to Gemini API
 router.post("/ask", askGemini);
 
-// Optional informational GET for browsers visiting /ask
+// POST route to analyze food images
+router.post("/analyze-food", analyzeFood);
+
+// Optional informational GET endpoints
 router.get("/ask", (req, res) => {
   res.status(200).json({
-    message: 'Use POST /api/gemini/ask with JSON body { "prompt": "your prompt" }'
+    message:
+      'Use POST /api/gemini/ask with JSON body { "prompt": "your prompt" }',
+  });
+});
+
+router.get("/analyze-food", (req, res) => {
+  res.status(200).json({
+    message:
+      'Use POST /api/gemini/analyze-food with form-data containing "image" file',
   });
 });
 

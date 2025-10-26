@@ -8,6 +8,7 @@ import HabitCard from '../components/HabitCard';
 import StreakCounter from '../components/StreakCounter';
 import { getTodayString, getDailyQuote } from '../utils/helpers';
 import GeminiChat from '../components/GeminiChat';
+import FoodAnalyzer from '../components/FoodAnalyzer';
 
 const Home = () => {
   const habits = useSelector(state => state.habits.habits);
@@ -103,10 +104,18 @@ const Home = () => {
           </div>
         )}
       </main>
-      <aside className='hover:border-emerald-600 hover:border-[5px] transition-colors duration-200 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-[2px] border-emerald-500 rounded-lg'>
-        <h2 className="text-2xl font-bold text-gray-900 mb-4 px-4 text-center">AI Habit Assistant</h2>
-        <GeminiChat />
-      </aside>
+      {/* AI Assistant Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <aside className='hover:border-emerald-600 hover:border-[5px] transition-colors duration-200 border-[2px] border-emerald-500 rounded-lg p-6'>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4 px-4 text-center">AI Habit Assistant</h2>
+          <GeminiChat />
+        </aside>
+
+        <aside className='hover:border-emerald-600 hover:border-[5px] transition-colors duration-200 border-[2px] border-emerald-500 rounded-lg p-6'>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4 px-4 text-center">Food Analysis</h2>
+          <FoodAnalyzer />
+        </aside>
+      </div>
     </div>
   );
 };
