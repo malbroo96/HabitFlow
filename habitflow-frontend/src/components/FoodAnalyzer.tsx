@@ -99,8 +99,6 @@ const FoodAnalyzer = () => {
               <Button
                 label="Select Image"
                 onClick={() => fileInputRef.current?.click()}
-                bgColor="bg-blue-500"
-                hoverColor="hover:bg-blue-600"
               />
               {selectedImage && (
                 <>
