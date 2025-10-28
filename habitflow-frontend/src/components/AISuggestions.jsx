@@ -38,7 +38,7 @@ const fetchSuggestions = async () => {
       const completionRate = calculateCompletionRate();
       const token = localStorage.getItem('token');
       
-      const response = await fetch('http://localhost:5000/api/ai/suggestions', {
+      const response = await fetch('https://habit-flow-backend-delta.vercel.app/api/ai/suggestions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

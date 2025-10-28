@@ -19,7 +19,7 @@ const HabitCard = ({ habit, isCompleted, onUpdate }) => {
       const token = localStorage.getItem('token');
       
       // Toggle completion in backend
-      const response = await fetch(`http://localhost:5000/api/habits/${habit.id}/toggle`, {
+      const response = await fetch(`https://habit-flow-backend-delta.vercel.app/api/habits/${habit.id}/toggle`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const HabitCard = ({ habit, isCompleted, onUpdate }) => {
       try {
         const token = localStorage.getItem('token');
         
-        const response = await fetch(`http://localhost:5000/api/habits/${habit.id}`, {
+        const response = await fetch(`https://habit-flow-backend-delta.vercel.app/api/habits/${habit.id}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`

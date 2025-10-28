@@ -14,7 +14,7 @@ const AuthSuccess = () => {
       localStorage.setItem('token', token);
       
       // Fetch user data
-      fetch('http://localhost:5000/api/auth/me', {
+      fetch('https://habit-flow-backend-delta.vercel.app/api/auth/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
