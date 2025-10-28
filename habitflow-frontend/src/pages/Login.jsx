@@ -69,7 +69,7 @@ const Login = () => {
           <h1 className="text-4xl font-bold text-gray-900">
             Habit<span className="text-emerald-500">Flow</span>
           </h1>
-          <p className="text-gray-600 mt-2">Welcome back! Sign in to continue your journey.</p>
+          <p className="text-gray-600 mt-2">Welcome back! Sign in to continue your journey!!!.</p>
         </div>
 
         {/* Login Form */}
