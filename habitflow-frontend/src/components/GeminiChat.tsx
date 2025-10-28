@@ -30,7 +30,7 @@ const GeminiChat = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3000/api/gemini/ask', {
+      const response = await fetch('https://habit-flow-gemini.vercel.app/api/gemini/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -50,7 +50,7 @@ const FoodAnalyzer = () => {
     formData.append('image', selectedImage);
 
     try {
-      const response = await fetch('http://localhost:3000/api/gemini/analyze-food', {
+      const response = await fetch('https://habit-flow-gemini.vercel.app/api/gemini/analyze-food', {
         method: 'POST',
         body: formData,
       });
